@@ -1,22 +1,29 @@
 @extends('layouts.app')
 
-@section('title', 'Register Pagina')
+@section('title', 'Register')
 
 @section('content')
+    <div class="flex justify-center mb-4 mt-8"> 
+        <img src="{{ asset('images/logo1_groot.png') }}" alt="Barroc Intens Logo" class="max-h-32">
+    </div>
+
     <div class="bg-white flex items-center justify-center py-6 px-4 sm:px-6 lg:px-8">
         <div class="max-w-md w-full space-y-8">
             <!-- Titel -->
             <div>
-                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                    Maak een nieuw account aan
+                <h2 class="text-center text-3xl font-extrabold text-gray-900">
+                    Registreer een nieuw account
                 </h2>
                 <p class="mt-2 text-center text-sm text-gray-600">
                     Of
                     <a href="{{ route('login') }}" class="font-medium text-yellow-500 hover:text-yellow-600">
-                        log in op een bestaand account
+                        log in met een bestaand account
                     </a>
                 </p>
             </div>
+
+            <!-- Session Status -->
+            <x-auth-session-status class="mb-4" :status="session('status')" />
 
             <!-- Formulier -->
             <form method="POST" action="{{ route('register') }}" class="bg-white shadow-lg rounded-lg p-8 border border-yellow-500">
@@ -54,7 +61,7 @@
                     <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                 </div>
 
-                <!-- Submit -->
+                <!-- Submit Button -->
                 <div class="flex items-center justify-between mt-6">
                     <x-primary-button class="ml-3 bg-yellow-500 hover:bg-yellow-600 focus:ring-yellow-400">
                         {{ __('Register') }}

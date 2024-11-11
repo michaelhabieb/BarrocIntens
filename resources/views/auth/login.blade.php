@@ -1,13 +1,17 @@
 @extends('layouts.app')
 
-@section('title', 'Login Pagina')
+@section('title', 'Login')
 
 @section('content')
+    <div class="flex justify-center mb-4 mt-8"> 
+        <img src="{{ asset('images/logo1_groot.png') }}" alt="Barroc Intens Logo" class="max-h-32">
+    </div>
+
     <div class="bg-white flex items-center justify-center py-6 px-4 sm:px-6 lg:px-8">
         <div class="max-w-md w-full space-y-8">
             <!-- Titel -->
             <div>
-                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                <h2 class="text-center text-3xl font-extrabold text-gray-900">
                     Log in op je account
                 </h2>
                 <p class="mt-2 text-center text-sm text-gray-600">
@@ -29,7 +33,7 @@
                 <div>
                     <x-input-label for="email" :value="__('Email')" />
                     <x-text-input id="email" class="block mt-1 w-full border-gray-300 focus:border-yellow-500 focus:ring-yellow-500"
-                        type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+                        type="email" name="email" :value="old('email')" required autofocus />
                     <x-input-error :messages="$errors->get('email')" class="mt-2" />
                 </div>
 
