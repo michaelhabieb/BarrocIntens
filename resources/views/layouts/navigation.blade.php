@@ -3,7 +3,7 @@
         <!-- Logo -->
         <a href="/index" class="flex items-center">
             <img src="{{ asset('images/logo5_klein.png') }}" alt="Barroc Intens Logo" class="h-8 mr-2"> <!-- Voeg het logo toe -->
-            <span class="text-white text-2xl font-semibold">Barroc Intens<span class="text-black">.</span></span>
+            <span class="text-white text-2xl font-semibold">Barroc<span class="text-black">Intens.</span></span>
 
         </a>
         

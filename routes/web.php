@@ -31,7 +31,7 @@ Route::get('/index', function () {
 
 Route::get('/contact', function () {
     return view('contact');
-})->name('contact');
+})->middleware(['auth'])->name('contact');
 
 
 // Groep voor profielbeheer (alleen toegankelijk na inloggen)
