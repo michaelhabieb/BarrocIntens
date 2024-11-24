@@ -1,53 +1,55 @@
 @extends('layouts.app')
 
-@section('title', 'Contact Pagina')
+@section('title', 'Contact')
 
 @section('content')
-    <!-- Contact formulier -->
-    <div class="bg-white flex items-center justify-center py-14 px-4 sm:px-6 lg:px-8"> <!-- Padding verwijderd van min-h-screen -->
-        <div class="max-w-md w-full space-y-8">
-            <!-- Titel -->
-            <div>
-                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                    Neem contact met ons op
-                </h2>
-                <p class="mt-2 text-center text-sm text-gray-600">
-                    Vul hieronder je gegevens in om contact met ons op te nemen.
-                </p>
-            </div>
+    <div class="min-h-screen flex flex-col items-center justify-center py-12 px-6 lg:px-8" style="background-color: #FFFBEA;">
+        <!-- Titel -->
+        <div class="text-center mb-6">
+            <h1 class="text-4xl font-extrabold text-gray-900">Neem Contact Op</h1>
+            <p class="mt-2 text-gray-700">Heb je vragen? Neem gerust contact met ons op via onderstaand formulier of onze contactgegevens.</p>
+        </div>
 
-            <!-- Formulier -->
-            <form method="POST" action="#" class="bg-white shadow-lg rounded-lg p-8 border border-yellow-500">
+        <!-- Contact Gegevens -->
+        <div class="bg-white rounded-lg shadow-md p-6 w-full max-w-3xl mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Onze Contactgegevens</h2>
+            <p class="text-gray-700">
+                <strong>Telefoon:</strong> <span class="text-yellow-600">+31 6 1234 5678</span>
+            </p>
+            <p class="text-gray-700 mt-2">
+                <strong>Email:</strong> <span class="text-yellow-600">support@barrocintens.fake</span>
+            </p>
+        </div>
+
+        <!-- Contactformulier -->
+        <div class="bg-white rounded-lg shadow-md p-8 w-full max-w-3xl">
+            <form method="POST" action="#">
                 @csrf
-
+                
                 <!-- Naam -->
-                <div>
-                    <x-input-label for="name" :value="__('Naam')" />
-                    <x-text-input id="name" class="block mt-1 w-full border-gray-300 focus:border-yellow-500 focus:ring-yellow-500"
-                                  type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-                    <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                <div class="mb-4">
+                    <label for="name" class="block text-gray-700 font-semibold mb-2">Naam</label>
+                    <input type="text" id="name" name="name" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-yellow-500 focus:border-yellow-500" placeholder="Jouw naam" required>
                 </div>
 
-                <!-- E-mail -->
-                <div class="mt-4">
-                    <x-input-label for="email" :value="__('E-mail')" />
-                    <x-text-input id="email" class="block mt-1 w-full border-gray-300 focus:border-yellow-500 focus:ring-yellow-500"
-                                  type="email" name="email" :value="old('email')" required autocomplete="email" />
-                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                <!-- Email -->
+                <div class="mb-4">
+                    <label for="email" class="block text-gray-700 font-semibold mb-2">Email</label>
+                    <input type="email" id="email" name="email" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-yellow-500 focus:border-yellow-500" placeholder="Jouw emailadres" required>
                 </div>
 
                 <!-- Bericht -->
-                <div class="mt-4">
-                    <x-input-label for="message" :value="__('Bericht')" />
-                    <textarea id="message" class="block mt-1 w-full border-gray-300 focus:border-yellow-500 focus:ring-yellow-500" name="message" required></textarea>
-                    <x-input-error :messages="$errors->get('message')" class="mt-2" />
+                <div class="mb-6">
+                    <label for="message" class="block text-gray-700 font-semibold mb-2">Bericht</label>
+                    <textarea id="message" name="message" rows="5" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-yellow-500 focus:border-yellow-500" placeholder="Typ hier je bericht" required></textarea>
                 </div>
 
-                <!-- Verzendknop -->
-                <div class="flex items-center justify-between mt-6">
-                    <x-primary-button class="ml-3 bg-yellow-500 hover:bg-yellow-600 focus:ring-yellow-400">
-                        {{ __('Verzenden') }}
-                    </x-primary-button>
+                <!-- Verzenden -->
+                <div class="flex justify-between items-center">
+                    <button type="submit" class="bg-yellow-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-yellow-600 focus:ring-2 focus:ring-yellow-400 focus:ring-offset-1">
+                        Verstuur Bericht
+                    </button>
+                    <p class="text-gray-500 text-sm">We reageren binnen 2 werkdagen.</p>
                 </div>
             </form>
         </div>
