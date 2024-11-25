@@ -9,7 +9,7 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
@@ -17,10 +17,17 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            if (Schema::hasTable('companies')) {
+                $table->foreignId('company_id')->nullable()->constrained('companies')->cascadeOnDelete();
+            } else {
+                $table->unsignedBigInteger('company_id')->nullable();
+                // Foreign key can be added later manually if needed
+            }
             $table->rememberToken();
             $table->timestamps();
         });
     }
+    
 
     /**
      * Reverse the migrations.
