@@ -22,7 +22,7 @@
                 <!-- Dit moet later specifiek voor de juiste users worden -->
                 <a href="{{ route('dashboard') }}" class="text-white">Dashboard</a>
 
-                <a href="" class="text-white">Machines</a>
+                <a href="{{ route('products.index') }}" class="text-white">Machines</a>
                 <a href="{{ route('contact') }}" class="text-white">Contact</a>
                 
                 <!-- Logout Form -->
