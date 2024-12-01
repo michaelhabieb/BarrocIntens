@@ -11,12 +11,13 @@ class Company extends Model
 
     protected $fillable = ['name', 'phone_number', 'street', 'house_number', 'city'];
 
+
     // Relationships
     public function leases()
     {
-        return $this->belongsToMany(Lease::class, 'lease_company');
+        return $this->belongsToMany(Lease::class, 'name');
     }
-
+    
     public function invoices()
     {
         return $this->hasMany(Invoice::class);

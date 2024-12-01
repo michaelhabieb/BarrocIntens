@@ -18,5 +18,14 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'user@test.com',
         ]);
+
+        \App\Models\Company::factory()->count(10)->create();
+        ([
+            'name' => 'Test Company',
+            'phone_number' => '+31638338498',
+            'street' => 'TestStreet',
+            'house_number' => '82',
+            'city' => 'New York',
+        ]);
     }
 }

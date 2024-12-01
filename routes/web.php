@@ -3,7 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\LeaseController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,7 +29,36 @@ Route::get('/index', function () {
     return view('index');
 })->middleware(['auth'])->name('index');
 
-// Route voor de contactpagina
+// Route voor Lease index page
+Route::get('/leases', [LeaseController::class, 'index'])
+    ->middleware(['auth'])
+    ->name('leases.index');
+
+// Show form to create a new lease
+Route::get('/leases/create', [LeaseController::class, 'create'])
+    ->middleware(['auth'])
+    ->name('leases.create');
+
+// Store a new lease
+Route::post('/leases', [LeaseController::class, 'store'])
+    ->middleware(['auth'])
+    ->name('leases.store');
+
+// Show form to edit an existing lease
+Route::get('/leases/{lease}/edit', [LeaseController::class, 'edit'])
+    ->middleware(['auth'])
+    ->name('leases.edit');
+
+// Update an existing lease
+Route::put('/leases/{lease}', [LeaseController::class, 'update'])
+    ->middleware(['auth'])
+    ->name('leases.update');
+
+// Delete an existing lease
+Route::delete('/leases/{lease}', [LeaseController::class, 'destroy'])
+    ->middleware(['auth'])
+    ->name('leases.destroy');
+
 Route::get('/contact', function () {
     return view('contact');
 })->middleware(['auth'])->name('contact');

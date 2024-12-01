@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('leases', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('description');
-            $table->integer('invoice_period');
-            $table->boolean('bkr_check');
+            $table->text('description')->nullable();
+            $table->date('start_date')->nullable(); // Startdatum
+            $table->date('end_date')->nullable();   // Einddatum
+            $table->boolean('bkr_check')->default(value: false);
             $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->timestamps();
         });
@@ -30,4 +31,5 @@ return new class extends Migration
     {
         Schema::dropIfExists('leases');
     }
+    
 };

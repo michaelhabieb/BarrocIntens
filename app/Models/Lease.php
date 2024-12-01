@@ -9,16 +9,16 @@ class Lease extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'invoice_period', 'bkr_check'];
-
+    protected $fillable = ['title', 'description', 'start_date', 'end_date', 'company_id', 'bkr_check'];
     // Relationships
-    public function companies()
+    public function company()
     {
-        return $this->belongsToMany(Company::class, 'lease_company');
+        return $this->belongsTo(Company::class);
     }
 
     public function invoices()
     {
         return $this->hasMany(Invoice::class);
     }
+
 }

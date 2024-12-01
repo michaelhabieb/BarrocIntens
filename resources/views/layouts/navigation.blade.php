@@ -23,6 +23,9 @@
                 <a href="{{ route('dashboard') }}" class="text-white">Dashboard</a>
 
                 <a href="{{ route('products.index') }}" class="text-white">Machines</a>
+                                
+                <a href="{{ route('leases.index') }}" class="text-white">Leases</a>
+
                 <a href="{{ route('contact') }}" class="text-white">Contact</a>
                 
                 <!-- Logout Form -->

@@ -15,7 +15,8 @@ class CompanyController extends Controller
 
     public function create()
     {
-        return view('companies.create');
+        $companies = Company::all(); // Fetch all companies
+        return view('leases.create', compact('companies'));
     }
 
     public function store(Request $request)
@@ -31,7 +32,7 @@ class CompanyController extends Controller
         Company::create($data);
         return redirect()->route('companies.index');
     }
-
+    
     public function show(Company $company)
     {
         return view('companies.show', compact('company'));
