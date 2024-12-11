@@ -11,6 +11,21 @@
             </p>
         </div>
 
+        <!-- Filterbalk -->
+        <div class="max-w-6xl mx-auto mb-8 px-4 flex flex-wrap items-center justify-between">
+            <div class="text-gray-600 text-lg font-semibold">Sorteer op:</div>
+            <div>
+                <a href="{{ route('products.index', ['sort' => 'price_asc']) }}"
+                   class="text-yellow-600 hover:text-yellow-800 font-semibold px-4 py-2 bg-yellow-100 rounded shadow-sm">
+                    Prijs: Laag naar Hoog
+                </a>
+                <a href="{{ route('products.index', ['sort' => 'price_desc']) }}"
+                   class="text-yellow-600 hover:text-yellow-800 font-semibold px-4 py-2 bg-yellow-100 rounded shadow-sm ml-2">
+                    Prijs: Hoog naar Laag
+                </a>
+            </div>
+        </div>
+
         <!-- Producten Lijst -->
         <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-4">
             @foreach ($products as $product)

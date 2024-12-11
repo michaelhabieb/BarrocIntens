@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LeaseController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -65,7 +66,7 @@ Route::get('/contact', function () {
 
 // Routes voor het beheren van producten (auth vereist)
 Route::middleware('auth')->group(function () {
-    // Route voor het weergeven van de productlijst
+    // Route voor het weergeven van de productlijst met filteren
     Route::get('/products', [ProductController::class, 'index'])->name('products.index');
     
     // Route om een nieuw product aan te maken

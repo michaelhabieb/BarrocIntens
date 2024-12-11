@@ -9,10 +9,23 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::all();
-        return view('products', compact('products'));
+        // Haal de sorteerveld waarde op uit de querystring
+        $sort = $request->input('sort', 'price_asc'); // standaard prijs oplopend
+
+        // Query voor producten met sorteeroptie
+        $query = Product::query();
+
+        if ($sort === 'price_asc') {
+            $query->orderBy('price', 'asc'); // Prijs oplopend
+        } elseif ($sort === 'price_desc') {
+            $query->orderBy('price', 'desc'); // Prijs aflopend
+        }
+
+        $products = $query->get();
+
+        return view('products', compact('products', 'sort'));
     }
 
     public function create()
@@ -37,12 +50,11 @@ class ProductController extends Controller
         }
 
         Product::create($data);
-        return redirect()->route('products.index');
+        return redirect()->route('products.index')->with('success', 'Product succesvol aangemaakt.');
     }
 
     public function show(Product $product)
     {
-        // Toon details van een specifiek product
         return view('products.show', compact('product'));
     }
 
@@ -64,16 +76,14 @@ class ProductController extends Controller
 
         // Update afbeelding indien aanwezig
         if ($request->hasFile('image')) {
-            // Verwijder de oude afbeelding indien er een was
             if ($product->image) {
                 Storage::disk('public')->delete($product->image);
             }
-
             $data['image'] = $request->file('image')->store('images', 'public');
         }
 
         $product->update($data);
-        return redirect()->route('products.index');
+        return redirect()->route('products.index')->with('success', 'Product succesvol bijgewerkt.');
     }
 
     public function destroy(Product $product)
@@ -83,6 +93,6 @@ class ProductController extends Controller
         }
 
         $product->delete();
-        return redirect()->route('products.index');
+        return redirect()->route('products.index')->with('success', 'Product succesvol verwijderd.');
     }
 }
