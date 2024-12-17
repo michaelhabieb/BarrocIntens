@@ -2,98 +2,93 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LeaseController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CategoryController; // Voeg CategoryController toe
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
+| Hier worden alle routes van je webapplicatie gedefinieerd.
+| Routes zijn gegroepeerd en voorzien van middleware en logische secties.
 |
 */
 
-// Route voor de standaard welkomstpagina
+// ------------------------------
+// Standaard Welkomstpagina
+// ------------------------------
 Route::get('/', function () {
     return view('welcome');
 });
 
-// Route voor de dashboardpagina
-Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])
-    ->middleware(['auth', 'verified'])->name('dashboard');
+// ------------------------------
+// Dashboard Routes
+// ------------------------------
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/index', function () {
+        return view('index');
+    })->name('index');
+});
 
-// Route voor de nieuwe indexpagina (landingspagina na login)
-Route::get('/index', function () {
-    return view('index');
-})->middleware(['auth'])->name('index');
-
-// Route voor Lease index page
-Route::get('/leases', [LeaseController::class, 'index'])
-    ->middleware(['auth'])
-    ->name('leases.index');
-
-// Show form to create a new lease
-Route::get('/leases/create', [LeaseController::class, 'create'])
-    ->middleware(['auth'])
-    ->name('leases.create');
-
-// Store a new lease
-Route::post('/leases', [LeaseController::class, 'store'])
-    ->middleware(['auth'])
-    ->name('leases.store');
-
-// Show form to edit an existing lease
-Route::get('/leases/{lease}/edit', [LeaseController::class, 'edit'])
-    ->middleware(['auth'])
-    ->name('leases.edit');
-
-// Update an existing lease
-Route::put('/leases/{lease}', [LeaseController::class, 'update'])
-    ->middleware(['auth'])
-    ->name('leases.update');
-
-// Delete an existing lease
-Route::delete('/leases/{lease}', [LeaseController::class, 'destroy'])
-    ->middleware(['auth'])
-    ->name('leases.destroy');
-
-Route::get('/contact', function () {
+// ------------------------------
+// Contactpagina
+// ------------------------------
+Route::middleware('auth')->get('/contact', function () {
     return view('contact');
-})->middleware(['auth'])->name('contact');
+})->name('contact');
 
-// Routes voor het beheren van producten (auth vereist)
-Route::middleware('auth')->group(function () {
-    // Route voor het weergeven van de productlijst met filteren
-    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
-    
-    // Route om een nieuw product aan te maken
-    Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
-    
-    // Route voor het opslaan van een nieuw product
-    Route::post('/products', [ProductController::class, 'store'])->name('products.store');
-    
-    // Route voor het bewerken van een product
-    Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
-    
-    // Route voor het bijwerken van een product
-    Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
-    
-    // Route voor het verwijderen van een product
-    Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
-    
-    // Route voor het bekijken van productdetails
-    Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
+// ------------------------------
+// Lease Management Routes
+// ------------------------------
+Route::middleware('auth')->prefix('leases')->name('leases.')->group(function () {
+    Route::get('/', [LeaseController::class, 'index'])->name('index');
+    Route::get('/create', [LeaseController::class, 'create'])->name('create');
+    Route::post('/', [LeaseController::class, 'store'])->name('store');
+    Route::get('/{lease}/edit', [LeaseController::class, 'edit'])->name('edit');
+    Route::put('/{lease}', [LeaseController::class, 'update'])->name('update');
+    Route::delete('/{lease}', [LeaseController::class, 'destroy'])->name('destroy');
 });
 
-// Groep voor profielbeheer (alleen toegankelijk na inloggen)
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// ------------------------------
+// Product Management Routes
+// ------------------------------
+Route::middleware('auth')->prefix('products')->name('products.')->group(function () {
+    Route::get('/', [ProductController::class, 'index'])->name('index');
+    Route::get('/create', [ProductController::class, 'create'])->name('create');
+    Route::post('/', [ProductController::class, 'store'])->name('store');
+    Route::get('/{product}/edit', [ProductController::class, 'edit'])->name('edit');
+    Route::put('/{product}', [ProductController::class, 'update'])->name('update');
+    Route::delete('/{product}', [ProductController::class, 'destroy'])->name('destroy');
+    Route::get('/{product}', [ProductController::class, 'show'])->name('show');
 });
 
-// Auth routes (zoals geleverd door Breeze)
+// ------------------------------
+// Category Management Routes
+// ------------------------------
+Route::middleware('auth')->prefix('categories')->name('categories.')->group(function () {
+    Route::get('/', [CategoryController::class, 'index'])->name('index'); // Categorieën overzicht
+    Route::get('/create', [CategoryController::class, 'create'])->name('create'); // Categorie aanmaken
+    Route::post('/', [CategoryController::class, 'store'])->name('store'); // Categorie opslaan
+    Route::get('/{category}', [CategoryController::class, 'show'])->name('show'); // Categorie details
+    Route::get('/{category}/edit', [CategoryController::class, 'edit'])->name('edit'); // Categorie bewerken
+    Route::put('/{category}', [CategoryController::class, 'update'])->name('update'); // Categorie updaten
+    Route::delete('/{category}', [CategoryController::class, 'destroy'])->name('destroy'); // Categorie verwijderen
+});
+
+// ------------------------------
+// Profielbeheer Routes
+// ------------------------------
+Route::middleware('auth')->prefix('profile')->name('profile.')->group(function () {
+    Route::get('/', [ProfileController::class, 'edit'])->name('edit');
+    Route::patch('/', [ProfileController::class, 'update'])->name('update');
+    Route::delete('/', [ProfileController::class, 'destroy'])->name('destroy');
+});
+
+// ------------------------------
+// Authentication Routes
+// ------------------------------
 require __DIR__.'/auth.php';

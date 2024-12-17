@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -12,7 +13,10 @@ class DashboardController extends Controller
         // Haal alle producten op
         $products = Product::all();
         
-        // Geef de producten door aan de dashboard view
-        return view('dashboard', compact('products'));
+        // Haal alle categorieën op
+        $categories = Category::all();
+
+        // Geef de producten en categorieën door aan de dashboard view
+        return view('dashboard', compact('products', 'categories'));
     }
 }
